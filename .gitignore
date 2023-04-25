@@ -2,3 +2,5 @@
 
 node_modules/
 coverage/
+src/certificate/server.cert
+src/certificate/server.key
