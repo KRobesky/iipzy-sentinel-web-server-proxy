@@ -7,6 +7,8 @@ const credentials = require("../routes/credentials");
 const devices = require("../routes/devices");
 const discovery = require("../routes/discovery");
 const eventWait = require("../routes/eventWait");
+const proxy_down = require("../routes/proxy_down");
+const proxy_up = require("../routes/proxy_up");
 const testRoute = require("../routes/testRoute");
 const requestDispatcher = require("../routes/requestDispatcher");
 const settings = require("../routes/settings");
@@ -48,6 +50,8 @@ module.exports = function(app) {
   app.use("/api/eventWait", eventWait);
   app.use("/api/request", requestDispatcher);
   app.use("/api/settings", settings);
+  app.use("/proxy_down", proxy_down);
+  app.use("/proxy_up", proxy_up);
   app.use("/express_backend", testRoute);
   app.use(error);
 };
