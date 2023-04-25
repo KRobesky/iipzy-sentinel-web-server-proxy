@@ -10,7 +10,7 @@ const { log, timestampToString } = require("iipzy-shared/src/utils/logFile");
 //const { isValidConnection } = require("./validateConnection");
 
 router.get("/", async (req, res) => {
-  log("GET proxy_down: timestamp = " + timestampToString(req.header("x-timestamp")), "ewat", "info");
+  log("GET proxy_down: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
 
   setTimeout(() => {
     return res.send({
@@ -18,6 +18,11 @@ router.get("/", async (req, res) => {
       data: { connToken: 'biteme' }
     });
   }, 5 * 1000);
+});
+
+router.post("/", async (req, res) => {
+  log("POST proxy_down: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
+  res.send({data: "result-down"});
 });
 
 module.exports = router;

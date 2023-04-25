@@ -50,8 +50,8 @@ module.exports = function(app) {
   app.use("/api/eventWait", eventWait);
   app.use("/api/request", requestDispatcher);
   app.use("/api/settings", settings);
-  app.use("/proxy_down", proxy_down);
-  app.use("/proxy_up", proxy_up);
+  app.use("/api/proxy_down", proxy_down);
+  app.use("/api/proxy_up", proxy_up);
   app.use("/express_backend", testRoute);
   app.use(error);
 };
