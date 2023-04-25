@@ -23,6 +23,8 @@ router.post("/", async (req, res) => {
     "cred",
     "info"
   );
+
+  res.send({});
   /*
   const { userName, passwordDecrypted } = await getLoggedInCredentials();
 

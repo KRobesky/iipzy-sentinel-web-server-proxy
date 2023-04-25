@@ -13,6 +13,7 @@ router.post("/", async (req, res) => {
     "reqd",
     "info"
   );
+  res.send({});
   /*
   const connToken = req.header(Defs.httpCustomHeader_XConnToken);
   log("POST request: connToken = " + connToken);

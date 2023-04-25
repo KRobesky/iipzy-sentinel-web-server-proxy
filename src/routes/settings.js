@@ -271,6 +271,7 @@ async function setServiceAddress(serviceAddress) {
 
 router.get("/", async (req, res) => {
   log("GET settings: timestamp = " + timestampToString(req.header("x-timestamp")), "sets");
+  res.send({});
   /*
   if (!isValidConnection(res, req.header("x-conn-token"))) return;
 
@@ -295,6 +296,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   log("POST settings: timestamp = " + timestampToString(req.header("x-timestamp")), "sets", "info");
+  res.send({});
   /*
   if (!isValidConnection(res, req.header("x-conn-token"))) return;
 
@@ -379,6 +381,7 @@ router.post("/", async (req, res) => {
 
 router.get("/downloadpingchartdata", async (req, res) => {
   log("GET settings/downloadpingchartdata", "dnld", "info");
+  res.send({});
   /*
 
   if (!isValidClient(req, res)) return;
@@ -389,6 +392,7 @@ router.get("/downloadpingchartdata", async (req, res) => {
 
 router.get("/downloadspeedtestdata", async (req, res) => {
   log("GET settings/downloadspeedtestdata", "dnld", "info");
+  res.send({});
   /*
 
   if (!isValidClient(req, res)) return;
@@ -402,6 +406,7 @@ router.get("/serviceaddress", async (req, res) => {
     "GET settings/serviceaddress: timestamp = " + timestampToString(req.header("x-timestamp")),
     "sets"
   );
+  res.send({});
   /*
   if (!isValidConnection(res, req.header("x-conn-token"))) return;
 
@@ -418,6 +423,7 @@ router.post("/uploadpingpchartdata", async (req, res) => {
     "sets",
     "info"
   );
+  res.send({});
     /*
   if (!isValidConnection(res, req.header("x-conn-token"))) return;
 
@@ -436,6 +442,7 @@ router.post("/uploadspeedtestdata", async (req, res) => {
     "sets",
     "info"
   );
+  res.send({});
   /*
 
   if (!isValidConnection(res, req.header("x-conn-token"))) return;

@@ -38,6 +38,8 @@ router.put("/", async (req, res) => {
     "devs",
     "info"
   );
+
+  res.send({});
   /*
   const connToken = req.header("x-conn-token");
 

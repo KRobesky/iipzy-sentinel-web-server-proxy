@@ -13,7 +13,7 @@ const {
   fileWriteAsync
 } = require("iipzy-shared/src/utils/fileIO");
 const { log, logInit, setLogLevel } = require("iipzy-shared/src/utils/logFile");
-const periodicHandler = require("iipzy-shared/src/utils/periodicHandler");
+//const periodicHandler = require("iipzy-shared/src/utils/periodicHandler");
 const { processErrorHandler } = require("iipzy-shared/src/utils/utils");
 
 const logPath = "/var/log";

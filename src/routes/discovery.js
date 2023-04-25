@@ -23,6 +23,8 @@ router.get("/", async (req, res) => {
     "dscv",
     "info"
   );
+
+  res.send({});
   /*
   let connToken = req.header("x-conn-token");
   if (!connToken) connToken = "";
@@ -85,6 +87,7 @@ router.get("/loglevel", async (req, res) => {
       timestampToString(req.header("x-timestamp")),
     "ewat"
   );
+  res.send({});
   /*
   //const userDataPath = "/etc/iipzy";
   // const configFile = new ConfigFile(userDataPath, Defs.configFilename);
@@ -102,6 +105,7 @@ router.post("/loglevel", async (req, res) => {
     "dscv",
     "info"
   );
+  res.send({});
   /*
   const logLevel = req.body.logLevel;
   if (logLevel) {
@@ -141,6 +145,7 @@ router.post("/sendlogs", async (req, res) => {
     "dscv",
     "info"
   );
+  res.send({});
   /*
   await sendLogFiles("appliance", "iipzy-pi");
   await sendLogFiles("updater", "iipzy-updater");
