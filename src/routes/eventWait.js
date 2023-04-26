@@ -4,6 +4,7 @@ const router = express.Router();
 const Defs = require("iipzy-shared/src/defs");
 const { handleError } = require("iipzy-shared/src/utils/handleError");
 const { log, timestampToString } = require("iipzy-shared/src/utils/logFile");
+const { enqueue } = require("./proxy_down_queue");
 //const { createConnectionUuid, getConnectionUuid } = require("../ipc/connection");
 //const { eventWaiter } = require("../ipc/eventWaiter");
 //const { sendDelayedResults } = require("../utils/sendDelayedResults");
@@ -11,6 +12,8 @@ const { log, timestampToString } = require("iipzy-shared/src/utils/logFile");
 
 router.get("/", async (req, res) => {
   log("GET eventWait: timestamp = " + timestampToString(req.header("x-timestamp")), "ewat", "info");
+
+  enqueue("eventWait", req, res);
 
   setTimeout(() => {
     return res.send({
