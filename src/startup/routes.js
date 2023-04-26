@@ -3,15 +3,10 @@ const express = require("express");
 const Defs = require("iipzy-shared/src/defs");
 const { log } = require("iipzy-shared/src/utils/logFile");
 
-const credentials = require("../routes/credentials");
-const devices = require("../routes/devices");
-const discovery = require("../routes/discovery");
-const eventWait = require("../routes/eventWait");
+const proxy = require("../routes/proxy");
 const proxy_down = require("../routes/proxy_down");
 const proxy_up = require("../routes/proxy_up");
 const testRoute = require("../routes/testRoute");
-const requestDispatcher = require("../routes/requestDispatcher");
-const settings = require("../routes/settings");
 const error = require("../middleware/error");
 
 /*
@@ -44,12 +39,12 @@ module.exports = function(app) {
     next();
   });
   app.use(express.json());
-  app.use("/api/credentials", credentials);
-  app.use("/api/devices", devices);
-  app.use("/api/discovery", discovery);
-  app.use("/api/eventWait", eventWait);
-  app.use("/api/request", requestDispatcher);
-  app.use("/api/settings", settings);
+  app.use("/api/credentials", proxy);
+  app.use("/api/devices", proxy);
+  app.use("/api/discovery", proxy);
+  app.use("/api/eventWait", proxy);
+  app.use("/api/request", proxy);
+  app.use("/api/settings", proxy);
   app.use("/api/proxy_down", proxy_down);
   app.use("/api/proxy_up", proxy_up);
   app.use("/express_backend", testRoute);

@@ -1,25 +1,28 @@
+const WaitQueue = require('wait-queue');
 //const Defs = require("iipzy-shared/src/defs");
 
-const { request } = require("express");
+//const { request } = require("express");
 const { log } = require("iipzy-shared/src/utils/logFile");
+const { sleep } = require("iipzy-shared/src/utils/utils");
 
-let queue = [];
+let queue = new WaitQueue();
 
 function parseReq(req) {
-  return { path: req.path,
-           method: req.method,
-           host: req.host,
-           protocol: req.protocol,
-           body: req.body,
+  return {  path: req.path,
+            originalUrl: req.originalUrl,
+            baseUrl: req.baseUrl,
+            method: req.method,
+            host: req.host,
+            protocol: req.protocol,
+            body: req.body,
   };
 }
 
-function enqueue(key, req, res) {
+function enqueue(req, res) {
   try {
-    log("enqueue: key: " + key + ", req: " + JSON.stringify(parseReq(req)), "qu  ", "info");
+    log("enqueue: req: " + JSON.stringify(parseReq(req)), "qu  ", "info");
     log("enqueue: res: " + res, "qu  ", "info");
-    const data = {key, req, res};
-    //queue.push({key, req, res});
+    const data = {req, res};
     queue.push(data);
   } catch (ex) {
     log("(Exception) enqueue: " + ex, "qu  ", "info");
@@ -29,6 +32,9 @@ function enqueue(key, req, res) {
 async function dequeue() {
   try {
     log("dequeue", "qu  ", "info");
+    const data = await wq.shift();
+    return data;
+    /*
     while (true) {
       if (queue.length > 0) {
         const data = queue[0];
@@ -37,6 +43,7 @@ async function dequeue() {
       }
       await sleep(100);
     }
+    */
   } catch (ex) {
     log("(Exception) dequeue: " + ex, "qu  ", "info");
   }

@@ -10,7 +10,8 @@
   "dependencies": {
     "express": "^4.16.4",
     "iipzy-shared": "file:../iipzy-shared",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "wait-queue": "^1.1.4"
   },
   "proxy": "http://192.168.1.145:8002/",
   "eslintConfig": {
