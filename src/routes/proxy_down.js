@@ -23,6 +23,8 @@ router.get("/", async (req, res) => {
   }, 5 * 1000);
 });
 
+// from client proxy - request to client are sent in response to post.  
+//  Post body contains response to previous request to client.
 router.post("/", async (req, res) => {
   log("POST proxy_down: timestamp = " + timestampToString(req.header("x-timestamp")) + ", body = " + JSON.stringify(req.body), "prxy", "info");
   /*
@@ -35,18 +37,33 @@ router.post("/", async (req, res) => {
   */
   ///*
   try {
+    // "request" to client proxy
+    //?? TODO timeout.
     const qdata = await dequeue();
     log("POST proxy_down", "prxy", "info");
-    res.send({method: qdata.req.method, originalUrl: qdata.req.originalUrl, body: qdata.req.body});
+    res.send({method: qdata.req.method, originalUrl: qdata.req.originalUrl, body: qdata.req.body, headers: getCustomHeaders(qdata.req)});
+
     // TODO finish server side request.
-    await sleep(1000);
-    qdata.res.send({
-      event: JSON.stringify(req.body)
-    });
+     // response to browser
+    qdata.res.send(JSON.stringify(req.body.data));
   } catch (ex) {
      log("(Exception) POST proxy_down:" + ex, "prxy", "error");
   }
   //*/
 });
+
+function getCustomHeaders(req) {
+  const headers = req.headers;
+  const hobj = {headers};
+  const customHeaders = [];
+  //log("getCustomHeaders: " + JSON.stringify(hobj, null, 2), "prxy", "info");
+  for (const [key, value] of Object.entries(hobj.headers)) {
+    if (key.startsWith("x-")) {
+      //log(`${key}: ${value}`);
+      customHeaders.push({key, value});
+    }
+  }
+  return customHeaders;
+}
 
 module.exports = router;

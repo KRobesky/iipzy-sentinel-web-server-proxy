@@ -32,7 +32,7 @@ function enqueue(req, res) {
 async function dequeue() {
   try {
     log("dequeue", "qu  ", "info");
-    const data = await wq.shift();
+    const data = await queue.shift();
     return data;
     /*
     while (true) {
