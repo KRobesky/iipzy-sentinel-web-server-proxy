@@ -4,6 +4,7 @@ const WaitQueue = require('wait-queue');
 //const { request } = require("express");
 const { log } = require("iipzy-shared/src/utils/logFile");
 const { sleep } = require("iipzy-shared/src/utils/utils");
+const { parse } = require('uuid');
 
 let queueReq = new WaitQueue();
 let count = 0;
@@ -20,9 +21,23 @@ function parseReq(req) {
   };
 }
 
+function parseRes(res) {
+  try {
+    for (const [key] of Object.entries(res)) {
+      log("key = " + key);
+    }
+  } catch (ex) {
+    log("(Exception) parseRes: " + ex, "qu  ", "info");
+  }
+}
+
 function enqueueReq(req, res) {
   try {
+    //parseRes(req);
     log("enqueueReq[" + count + "]: req: " + JSON.stringify(parseReq(req)), "qu  ", "info");
+    res.ken_robesky_id = count;
+    log("enqueueReq[" + count + "]: res.ken_robesky_id: " + res.ken_robesky_id, "qu  ", "info");
+    //parseRes(res);
     const data = {req, res, count};
     queueReq.push(data);
     count++;
@@ -63,4 +78,4 @@ async function dequeueRes() {
   }
 }
 
-module.exports = { enqueueReq, dequeueReq, enqueueRes, dequeueRes, parseReq};
+module.exports = { enqueueReq, dequeueReq, enqueueRes, dequeueRes, parseReq, parseRes};
