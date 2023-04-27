@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
       log("POST proxy_down[" + prev_qdata.count + "] res to web = " + body_data, "prxy", "info" );
       log("POST proxy_down[" + prev_qdata.count + "] prev url = " + prev_qdata.res.req.originalUrl, "prxy", "info" );
       //parseRes(prev_qdata.res);
-      await prev_qdata.res.send(body_data);
+      await prev_qdata.res.send(req.body.data);
       //await qdata.res.send(body_data);
     }
       //enqueueRes(prev_qdata, JSON.stringify(req.body.data));
