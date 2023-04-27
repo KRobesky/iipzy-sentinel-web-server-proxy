@@ -5,8 +5,9 @@ const WaitQueue = require('wait-queue');
 const { log } = require("iipzy-shared/src/utils/logFile");
 const { sleep } = require("iipzy-shared/src/utils/utils");
 
-let queue = new WaitQueue();
-let count = 1;
+let queueReq = new WaitQueue();
+let count = 0;
+let queueRes = new WaitQueue();
 
 function parseReq(req) {
   return {  path: req.path,
@@ -19,36 +20,47 @@ function parseReq(req) {
   };
 }
 
-function enqueue(req, res) {
+function enqueueReq(req, res) {
   try {
-    log("enqueue: req: " + JSON.stringify(parseReq(req)), "qu  ", "info");
-    log("enqueue: res: " + res, "qu  ", "info");
+    log("enqueueReq[" + count + "]: req: " + JSON.stringify(parseReq(req)), "qu  ", "info");
     const data = {req, res, count};
-    queue.push(data);
+    queueReq.push(data);
     count++;
   } catch (ex) {
-    log("(Exception) enqueue: " + ex, "qu  ", "info");
+    log("(Exception) enqueueReq: " + ex, "qu  ", "info");
   } 
 }
 
-async function dequeue() {
+async function dequeueReq() {
   try {
-    log("dequeue", "qu  ", "info");
-    const data = await queue.shift();
+    log(">>>dequeueReq", "qu  ", "info");
+    const data = await queueReq.shift();
+    log("<<<dequeueReq[" + data.count + "]", "qu  ", "info");
     return data;
-    /*
-    while (true) {
-      if (queue.length > 0) {
-        const data = queue[0];
-        queue.splice(0);
-        return data;
-      }
-      await sleep(100);
-    }
-    */
   } catch (ex) {
-    log("(Exception) dequeue: " + ex, "qu  ", "info");
+    log("(Exception) dequeueReq: " + ex, "qu  ", "info");
   }
 }
 
-module.exports = { enqueue, dequeue };
+function enqueueRes(qdata, body) {
+  try {
+    log("enqueueRes[" + qdata.count + "]", "qu  ", "info");
+    const data = {qdata, body};
+    queueRes.push(data);
+   } catch (ex) {
+    log("(Exception) enqueueRes: " + ex, "qu  ", "info");
+  } 
+}
+
+async function dequeueRes() {
+  try {
+    log(">>>dequeueRes", "qu  ", "info");
+    const data = await queueRes.shift();
+    log("<<<dequeueRes[" + data.qdata.count + "]", "qu  ", "info");
+    return data;
+  } catch (ex) {
+    log("(Exception) dequeueRes: " + ex, "qu  ", "info");
+  }
+}
+
+module.exports = { enqueueReq, dequeueReq, enqueueRes, dequeueRes, parseReq};

@@ -10,7 +10,7 @@ const { log, timestampToString } = require("iipzy-shared/src/utils/logFile");
 //const { isValidConnection } = require("./validateConnection");
 
 router.get("/", async (req, res) => {
-  log("GET proxy_up: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
+  //log("GET proxy_up: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
 
   setTimeout(() => {
     return res.send({
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  log("POST proxy_up: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
+  //log("POST proxy_up: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
   res.send({data: 'result-up'});
 });
 
