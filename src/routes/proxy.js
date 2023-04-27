@@ -7,7 +7,7 @@ const { log, timestampToString } = require("iipzy-shared/src/utils/logFile");
 const { enqueue } = require("./proxy_down_queue");
 
 router.delete("/", async (req, res) => {
-  log("proxy.delete: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info" );
+  log("proxy.delete: url = " + req.originalUrl + ", timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info" );
 
   enqueue(req, res);
 
@@ -15,13 +15,13 @@ router.delete("/", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  log("proxy.get: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
+  log("proxy.get: url = " + req.originalUrl + ", timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
 
   enqueue(req, res);
 });
 
 router.put("/", async (req, res) => {
-  log("proxy.put: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info" );
+  log("proxy.put: url = " + req.originalUrl + ", timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info" );
 
   enqueue(req, res);
 
@@ -29,7 +29,7 @@ router.put("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  log("proxy.post: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info" );
+  log("proxy.post: url = " + req.originalUrl + ", timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info" );
   
   enqueue(req, res);
 });

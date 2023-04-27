@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require('cors');
 const https = require("https");
 const fs = require("fs");
 const http = require('http');
@@ -60,6 +61,9 @@ async function main() {
 
     //const port = process.env.PORT || config.get("port");
     log ("__dirname = " + __dirname, "main", "info");
+    app.use(cors({
+      origin: ['https://iipzy.net*']
+    }));
     server = https.createServer(
       {
         key: fs.readFileSync(__dirname + "/certificate/server.key"),

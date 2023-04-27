@@ -39,14 +39,17 @@ module.exports = function(app) {
     next();
   });
   app.use(express.json());
+  /*
   app.use("/api/credentials", proxy);
   app.use("/api/devices", proxy);
   app.use("/api/discovery", proxy);
   app.use("/api/eventWait", proxy);
   app.use("/api/request", proxy);
   app.use("/api/settings", proxy);
+  */
   app.use("/api/proxy_down", proxy_down);
   app.use("/api/proxy_up", proxy_up);
   app.use("/express_backend", testRoute);
+  app.use("/*", proxy);
   app.use(error);
 };

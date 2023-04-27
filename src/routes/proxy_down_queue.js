@@ -6,6 +6,7 @@ const { log } = require("iipzy-shared/src/utils/logFile");
 const { sleep } = require("iipzy-shared/src/utils/utils");
 
 let queue = new WaitQueue();
+let count = 1;
 
 function parseReq(req) {
   return {  path: req.path,
@@ -22,8 +23,9 @@ function enqueue(req, res) {
   try {
     log("enqueue: req: " + JSON.stringify(parseReq(req)), "qu  ", "info");
     log("enqueue: res: " + res, "qu  ", "info");
-    const data = {req, res};
+    const data = {req, res, count};
     queue.push(data);
+    count++;
   } catch (ex) {
     log("(Exception) enqueue: " + ex, "qu  ", "info");
   } 

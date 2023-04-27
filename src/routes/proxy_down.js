@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
 // from client proxy - request to client are sent in response to post.  
 //  Post body contains response to previous request to client.
 router.post("/", async (req, res) => {
-  log("POST proxy_down: timestamp = " + timestampToString(req.header("x-timestamp")) + ", body = " + JSON.stringify(req.body), "prxy", "info");
+  log("POST proxy_down - request: count = " + req.body.count + ", timestamp = " + timestampToString(req.header("x-timestamp")) + ", body = " + JSON.stringify(req.body.data, null, 2), "prxy", "info");
   /*
   setTimeout(() => {
     return res.send({
@@ -40,12 +40,12 @@ router.post("/", async (req, res) => {
     // "request" to client proxy
     //?? TODO timeout.
     const qdata = await dequeue();
-    log("POST proxy_down", "prxy", "info");
-    res.send({method: qdata.req.method, originalUrl: qdata.req.originalUrl, body: qdata.req.body, headers: getCustomHeaders(qdata.req)});
+    log("POST proxy_down - dequeue: count = " + qdata.count, "prxy", "info");
+    await res.send({method: qdata.req.method, originalUrl: qdata.req.originalUrl, body: qdata.req.body, headers: getCustomHeaders(qdata.req), count: qdata.count});
 
     // TODO finish server side request.
      // response to browser
-    qdata.res.send(JSON.stringify(req.body.data));
+    await qdata.res.send(JSON.stringify(req.body.data));
   } catch (ex) {
      log("(Exception) POST proxy_down:" + ex, "prxy", "error");
   }
