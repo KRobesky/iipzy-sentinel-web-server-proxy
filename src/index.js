@@ -62,9 +62,9 @@ async function main() {
     //const port = process.env.PORT || config.get("port");
     log ("__dirname = " + __dirname, "main", "info");
     // See: https://www.section.io/engineering-education/how-to-use-cors-in-nodejs-with-express/
-    app.use(cors({
-      origin: ['https://iipzy.net*']
-    }));
+    //app.use(cors({
+    //  origin: ['https://iipzy.net*']
+    //}));
     server = https.createServer(
       {
         key: fs.readFileSync(__dirname + "/certificate/server.key"),

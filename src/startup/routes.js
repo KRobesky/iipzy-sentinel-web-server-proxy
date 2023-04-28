@@ -4,8 +4,8 @@ const Defs = require("iipzy-shared/src/defs");
 const { log } = require("iipzy-shared/src/utils/logFile");
 
 const proxy = require("../routes/proxy");
-const proxy_down = require("../routes/proxy_down");
-const proxy_up = require("../routes/proxy_up");
+const proxy_request = require("../routes/proxy_request");
+const proxy_control = require("../routes/proxy_control");
 const testRoute = require("../routes/testRoute");
 const error = require("../middleware/error");
 
@@ -47,8 +47,8 @@ module.exports = function(app) {
   app.use("/api/request", proxy);
   app.use("/api/settings", proxy);
   */
-  app.use("/api/proxy_down", proxy_down);
-  app.use("/api/proxy_up", proxy_up);
+  app.use("/api/proxy_req", proxy_request);
+  app.use("/api/proxy_ctl", proxy_control);
   app.use("/express_backend", testRoute);
   app.use("/*", proxy);
   app.use(error);

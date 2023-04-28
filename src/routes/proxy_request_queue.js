@@ -8,7 +8,7 @@ const { parse } = require('uuid');
 
 let queueReq = new WaitQueue();
 let count = 0;
-let queueRes = new WaitQueue();
+//let queueRes = new WaitQueue();
 
 function parseReq(req) {
   return {  path: req.path,
@@ -35,8 +35,8 @@ function enqueueReq(req, res) {
   try {
     //parseRes(req);
     log("enqueueReq[" + count + "]: req: " + JSON.stringify(parseReq(req)), "qu  ", "info");
-    res.ken_robesky_id = count;
-    log("xenqueueReq[" + count + "]: res.ken_robesky_id: " + res.ken_robesky_id, "qu  ", "info");
+    res.iipzy_id = count;
+    //log("xenqueueReq[" + count + "]: res.ken_robesky_id: " + res.ken_robesky_id, "qu  ", "info");
     //parseRes(res);
     const data = {req, res, count};
     queueReq.push(data);
@@ -57,25 +57,4 @@ async function dequeueReq() {
   }
 }
 
-function enqueueRes(qdata, body) {
-  try {
-    log("enqueueRes[" + qdata.count + "]", "qu  ", "info");
-    const data = {qdata, body};
-    queueRes.push(data);
-   } catch (ex) {
-    log("(Exception) enqueueRes: " + ex, "qu  ", "info");
-  } 
-}
-
-async function dequeueRes() {
-  try {
-    log(">>>dequeueRes", "qu  ", "info");
-    const data = await queueRes.shift();
-    log("<<<dequeueRes[" + data.qdata.count + "]", "qu  ", "info");
-    return data;
-  } catch (ex) {
-    log("(Exception) dequeueRes: " + ex, "qu  ", "info");
-  }
-}
-
-module.exports = { enqueueReq, dequeueReq, enqueueRes, dequeueRes, parseReq, parseRes};
+module.exports = { enqueueReq, dequeueReq, parseReq, parseRes};

@@ -10,10 +10,10 @@ const { sleep } = require("iipzy-shared/src/utils/utils");
 //const { sendDelayedResults } = require("../utils/sendDelayedResults");
 //const { isValidConnection } = require("./validateConnection");
 
-const { dequeueReq, parseReq, parseRes } = require("./proxy_down_queue");
+const { dequeueReq, parseReq, parseRes } = require("./proxy_request_queue");
 
 router.get("/", async (req, res) => {
-  log("GET proxy_down: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
+  log("GET proxy_req: timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info");
 
   setTimeout(() => {
     return res.send({
@@ -28,23 +28,23 @@ router.get("/", async (req, res) => {
 let prev_qdata = null;
 router.post("/", async (req, res) => {
   log(">>> POST from sentinel", "prxy", "info");
-  log("POST proxy_down[" + req.body.count + "] rsp from sentinel: " + JSON.stringify(req.body.data, null, 2), "prxy", "info");
+  log("POST proxy_req[" + req.body.count + "] rsp from sentinel: " + JSON.stringify(req.body.data, null, 2), "prxy", "info");
 
   try {
     // "request" to client proxy
     //?? TODO timeout.
     const qdata = await dequeueReq();
-    log("POST proxy_down[" + qdata.count + "] req to sentinel: " + JSON.stringify(parseReq(qdata.req)), "prxy", "info");
+    log("POST proxy_req[" + qdata.count + "] req to sentinel: " + JSON.stringify(parseReq(qdata.req)), "prxy", "info");
     await res.send({method: qdata.req.method, originalUrl: qdata.req.originalUrl, body: qdata.req.body, headers: getCustomHeaders(qdata.req), count: qdata.count});
 
     // TODO finish server side request.
      // response to browser
     //await qdata.res.send(JSON.stringify(req.body.data));
     if (prev_qdata !== null) {
-      log("POST proxy_down[" + prev_qdata.count + "] ken_robesky_id = " + prev_qdata.res.ken_robesky_id, "prxy", "info" );
+      log("POST proxy_req[" + prev_qdata.count + "] iipzy_id = " + prev_qdata.res.iipzy_id, "prxy", "info" );
       const body_data = JSON.stringify(req.body.data);
-      log("POST proxy_down[" + prev_qdata.count + "] res to web = " + body_data, "prxy", "info" );
-      log("POST proxy_down[" + prev_qdata.count + "] prev url = " + prev_qdata.res.req.originalUrl, "prxy", "info" );
+      log("POST proxy_req[" + prev_qdata.count + "] res to web = " + body_data, "prxy", "info" );
+      log("POST proxy_req[" + prev_qdata.count + "] prev url = " + prev_qdata.res.req.originalUrl, "prxy", "info" );
       //parseRes(prev_qdata.res);
       await prev_qdata.res.send(req.body.data);
       //await qdata.res.send(body_data);
@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
       //enqueueRes(prev_qdata, JSON.stringify(req.body.data));
     prev_qdata = qdata;
   } catch (ex) {
-     log("(Exception) POST proxy_down:" + ex, "prxy", "error");
+     log("(Exception) POST proxy_req:" + ex, "prxy", "error");
   }
   log("<<< POST from sentinel", "prxy", "info");
 });
