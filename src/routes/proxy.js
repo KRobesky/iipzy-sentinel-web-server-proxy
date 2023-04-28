@@ -5,7 +5,7 @@ const router = express.Router();
 const Defs = require("iipzy-shared/src/defs");
 //const { handleError } = require("iipzy-shared/src/utils/handleError");
 const { log, timestampToString } = require("iipzy-shared/src/utils/logFile");
-const { enqueueReq } = require("./proxy_down_queue");
+const { enqueueReq } = require("./proxy_request_queue");
 
 router.delete("/", async (req, res) => {
   log("proxy.delete: url = " + req.originalUrl + ", timestamp = " + timestampToString(req.header("x-timestamp")), "prxy", "info" );
