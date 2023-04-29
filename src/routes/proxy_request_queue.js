@@ -8,7 +8,7 @@ const { parse } = require('uuid');
 
 let queueReq = new WaitQueue();
 let count = 0;
-//let queueRes = new WaitQueue();
+let queueRes = new WaitQueue();
 
 function parseReq(req) {
   return {  path: req.path,
@@ -34,8 +34,8 @@ function parseRes(res) {
 function enqueueReq(req, res) {
   try {
     //parseRes(req);
-    log("enqueueReq[" + count + "]: req: " + JSON.stringify(parseReq(req)), "qu  ", "info");
-    res.iipzy_id = count;
+    log("enqueueReq[" + count + "]", "qu  ", "info");
+    if (res) res.iipzy_id = count;
     //log("xenqueueReq[" + count + "]: res.ken_robesky_id: " + res.ken_robesky_id, "qu  ", "info");
     //parseRes(res);
     const data = {req, res, count};
@@ -57,4 +57,8 @@ async function dequeueReq() {
   }
 }
 
-module.exports = { enqueueReq, dequeueReq, parseReq, parseRes};
+function queueReqLength() {
+  return queueReq.length;
+}
+
+module.exports = { enqueueReq, dequeueReq, parseReq, parseRes, queueReqLength};
