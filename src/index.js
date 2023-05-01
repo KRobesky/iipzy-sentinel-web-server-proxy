@@ -21,13 +21,6 @@ const logPath = "/var/log";
 logInit(logPath, "iipzy-sentinel-web-server-proxy");
 
 require("./startup/routes")(app);
-/*
-const {
-  init: monitorEventsInit
-} = require("./backgroundServices/monitorEvents");
-const { init: userInit } = require("./backgroundServices/user");
-*/
-//const { addEvent } = require("./db/eventDB");
 
 const userDataPath = "/etc/iipzy";
 
@@ -59,20 +52,7 @@ async function main() {
     await checkProcessStopFile();
     */
 
-    //const port = process.env.PORT || config.get("port");
     log ("__dirname = " + __dirname, "main", "info");
-    // See: https://www.section.io/engineering-education/how-to-use-cors-in-nodejs-with-express/
-    app.use(cors({
-      origin: ['https://iipzy.net*']
-    }));
-    /*
-    const cors_options = {
-      origin: ['https://iipzy.net*'],
-      allowedHeaders: ['x-client-token'],
-      preflightContinue: false
-    };
-    app.options('*', cors(cors_options));
-    */
   
     server = https.createServer(
       {
@@ -86,40 +66,6 @@ async function main() {
   } catch(ex) {
     log("(Exception main: " + ex, "main", "error");
   }
-
-// server = app.listen(port, () =>
-//   log(`Listening on port ${port}...`, "main", "info")
-// );
-
- /*
-  app.get('/', (req, res) => {
-    log("---got a request", "main", "info");
-    res.send('Hello World!')
-  })
-  */
-
-  /*
-  local_server = http.createServer(function(req, res) { 
-    log("http.createServer: request = " + req);
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.write('Bite me!');
-    res.end();
-   }).listen(Defs.port_sentinel_core, "127.0.0.1");
-  */
-  /*
-  local_server.listen(Defs.port_sentinel_core, "127.0.0.1", function() { 
-    log("local_server.listen");
-  });
-  */
-
-  /*
-  const local_port = Defs.port_sentinel_core;
-  local_server = app.listen(local_port, async () => {
-    log(`Listening on port ${local_port}...`, "main", "info");
-  });
-  */
-
-}
 
 function configWatchCallback() {
   log("configWatchCallback", "main", "info");
