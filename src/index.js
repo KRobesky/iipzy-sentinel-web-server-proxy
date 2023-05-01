@@ -52,12 +52,10 @@ async function main() {
     await checkProcessStopFile();
     */
 
-    log ("__dirname = " + __dirname, "main", "info");
-  
-    server = https.createServer(
+     server = https.createServer(
       {
-        key: fs.readFileSync(__dirname + "/certificate/server.key"),
-        cert: fs.readFileSync(__dirname + "/certificate/server.cert")
+        key: fs.readFileSync(Defs.server_key),
+        cert: fs.readFileSync(Defs.server_cert)
       },
       app
     ).listen(Defs.port_sentinel_core, () => {
