@@ -58,8 +58,8 @@ async function main() {
         cert: fs.readFileSync(Defs.server_cert)
       },
       app
-    ).listen(Defs.port_sentinel_core, () => {
-      log(`Listening on port ${Defs.port_sentinel_core}...`, "main", "info");
+    ).listen(Defs.port_sentinel_web_server_proxy, () => {
+      log(`Listening on port ${Defs.port_sentinel_web_server_proxy}...`, "main", "info");
     });
   } catch(ex) {
     log("(Exception main: " + ex, "main", "error");
